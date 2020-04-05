@@ -27,12 +27,16 @@ class PluginPayfast extends GatewayPlugin
                 'description' => lang('Your PayFast Passphrase'),
                 'value' => ''
             ],
+            lang('Source IP Security Check?') => [
+                'type' => 'yesno',
+                'description' => lang('Select to ensure the callback comes from a PayFast IP.'),
+                'value' => '1'
+            ],
             lang('Test Mode?') => [
                 'type' => 'yesno',
                 'description' => lang('Select to enable test/sandbox mode'),
                 'value' => '0'
             ],
-
             lang('Invoice After Signup') =>  [
                 'type' => 'yesno',
                 'description' => lang('Select YES if you want an invoice sent to the customer after signup is complete.'),

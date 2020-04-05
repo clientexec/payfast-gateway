@@ -43,6 +43,32 @@ class PluginPayfastCallback extends PluginCallback
             die('Invalid Signature');
         }
 
+        // IP Based Security Check
+        // This is a setting that a user can disable (enabled by default), because it could break integration if the user is using CloudFlare without mod_cloudflare.
+        if ($this->settings->get('plugin_payfast_Source IP Security Check?') == 1) {
+            $validHosts = [
+                'www.payfast.co.za',
+                'sandbox.payfast.co.za',
+                'w1w.payfast.co.za',
+                'w2w.payfast.co.za',
+            ];
+            $validIps = [];
+            foreach ($validHosts as $pfHostname) {
+                $ips = gethostbynamel($pfHostname);
+                if ($ips !== false) {
+                    $validIps = array_merge($validIps, $ips);
+                }
+            }
+            $validIps = array_unique($validIps);
+
+            if (!in_array(CE_Lib::getRemoteAddr(), $validIps)) {
+                CE_Lib::log(4, 'Valid IPs:');
+                CE_Lib::log(4, $validIps);
+                CE_Lib::log(4, 'Invalid IP: ' . CE_Lib::getRemoteAddr());
+                die('Source IP not Valid');
+            }
+        }
+
         $url = 'https://'. $pfHost .'/eng/query/validate';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
