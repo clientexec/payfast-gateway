@@ -39,7 +39,7 @@ class PluginPayfast extends GatewayPlugin
             ],
             lang('Invoice After Signup') =>  [
                 'type' => 'yesno',
-                'description' => lang('Select YES if you want an invoice sent to the customer after signup is complete.'),
+                'description' => lang('Select YES if you want an invoice sent to the client after signup is complete.'),
                 'value' => '1'
             ],
             lang('Signup Name') =>  [
