@@ -9,6 +9,10 @@ class PluginPayfastCallback extends PluginCallback
 {
     function processCallback()
     {
+        // Execute PluginCallback::processCallback() first
+        if (!parent::processCallback()) {
+            return;
+        }
 
         if ($this->settings->get('plugin_payfast_Test Mode?')) {
             $pfHost = 'sandbox.payfast.co.za';
